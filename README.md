@@ -1,1 +1,5 @@
-# cse410lab1-bit-pointer
+# ${1:CSE410 Lab 1 Bit and Pointer}
+Bit and Pointer puzzles
+## Desc
+Junfei Zhang
+CSE 410 WI17
