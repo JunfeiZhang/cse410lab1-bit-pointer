@@ -1,4 +1,4 @@
-# ${1:CSE410 Lab 1 Bit and Pointer}
+#CSE410 Lab 1
 Bit and Pointer puzzles
 ## Desc
 Junfei Zhang
