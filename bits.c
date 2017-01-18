@@ -206,7 +206,9 @@ int sign(int x) {
  *   Rating: 2
  */
 int getByte(int x, int n) {
-  return 2;
+  x = x >> (n << 3); // n = 8
+  x = x & 0xFF; // remove front bits
+  return x;
 }
 // Rating: 3
 /* 
@@ -219,7 +221,10 @@ int getByte(int x, int n) {
  *   Rating: 3
  */
 int fitsBits(int x, int n) {
-  return 2;
+  int s = 33 + ~n; // 33 - n - 1
+  int xs = (x << s) >> s; // shake off unfit, remain fit
+  x = x ^ xs; // get potential negitive sign and unfit back
+  return !x;
 }
 // Rating: 3
 /* 
@@ -231,7 +236,9 @@ int fitsBits(int x, int n) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  return 2;
+  int xs = x >> n; // get n arithmetical 1 first
+  x = xs & ~(((1 << 31) >> n) << 1); // get n 1(not n+1), turn to 0
+  return x;
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
@@ -242,7 +249,11 @@ int logicalShift(int x, int n) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  return 2;
+  int sum = x + y;
+  return !(((sum ^ x) & (sum ^ y)) >> 31);
+  // sum ^ x and y and & for the MSB
+  // positive + negetive always fine
+  // positive + posative and negitive + negative cannot affect MSB
 }
 /* invert - Return x with the n bits that begin at position p inverted 
  *          (i.e., turn 0 into 1 and vice versa) and the rest left 
@@ -256,7 +267,11 @@ int addOK(int x, int y) {
  *   Rating: 3  
  */
 int invert(int x, int p, int n) {
-  return 2;
+  int top = 1 << 31; // MSB
+  int mask = top >> n; // n + 1 bit in front
+  mask = mask ^ top; // 0 in front, n bit follow by
+  mask = mask >> (32 + ~(p+n)); // 32 + ~(p+n) correct postion
+  return x ^ mask;
 }
 // Rating: 4
 /* 
@@ -267,7 +282,9 @@ int invert(int x, int p, int n) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return 2;
+  x = ((~x + 1) | x) >> 31; // ~x + 1 deals with x = 0
+  // otherwise, all become 0xFFFFFFFF
+  return x + 1;
 }
 
 // Extra Credit: Rating: 4
@@ -280,5 +297,9 @@ int bang(int x) {
  *   Rating: 4
  */
 int isPower2(int x) {
-  return 2;
+  int min_one = ~0; // -1
+  int sign = x >> 31;
+  int y = min_one ^ sign; // x >= 0 ? -1 : 0
+  x = (x & (x + y)) + !x; // if isPower2, x & (x-1) = 0; !x for 0
+  return !x;
 }
