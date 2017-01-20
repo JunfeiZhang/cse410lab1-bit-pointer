@@ -117,21 +117,21 @@ NOTES:
 
 #endif
 
-/*
- * Included for reference (compare to print_binary_fp).
- */
-void print_binary(int x) {
-  int i;
-  // start at MSB and go backwards (decrement)
-  for(i=31; i>=0; i--) {
-    // print the i-th bit (0 or 1)
-    printf("%d", (x>>i) & 0x1);
-    // add spaces to make more human-readable
-    if(i%8 == 0) printf(" ");
-    if(i%4 == 0) printf(" ");
-  }
-  printf("\n");
-}
+// /*
+//  * Included for reference (compare to print_binary_fp).
+//  */
+// void print_binary(int x) {
+//   int i;
+//   // start at MSB and go backwards (decrement)
+//   for(i=31; i>=0; i--) {
+//     // print the i-th bit (0 or 1)
+//     printf("%d", (x>>i) & 0x1);
+//     // add spaces to make more human-readable
+//     if(i%8 == 0) printf(" ");
+//     if(i%4 == 0) printf(" ");
+//   }
+//   printf("\n");
+// }
 
 // Rating: 1
 /* 
