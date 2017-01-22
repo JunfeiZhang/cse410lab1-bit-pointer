@@ -1,7 +1,7 @@
 /*
  * CSE 410 Lab 1 (Data Lab - Pointers)
  *
- * <Please put your name and userid here>
+ * Junfei Zhang, jz39
  *
  * pointer.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
@@ -89,8 +89,10 @@ int intSize() {
   int * intPtr1;
   int * intPtr2;
   // Write code to compute size of an integer.
-
-  return 2;
+  intPtr1 = intArray;
+  intPtr2 = intArray + 1;
+  // casting to address(pointer) length
+  return (long) intPtr2 - (long) intPtr1;
 }
 
 /*
@@ -101,9 +103,9 @@ int doubleSize() {
   double * doubPtr1;
   double * doubPtr2;
   // Write code to compute size of a double.
-
-
-  return 2;
+  doubPtr1 = doubArray;
+  doubPtr2 = doubArray + 1;
+  return (long) doubPtr2 - (long) doubPtr1;
 }
 
 /*
@@ -114,8 +116,9 @@ int pointerSize() {
   double ** ptrPtr1;
   double ** ptrPtr2;
   // Write code to compute size of a pointer.
-
-  return 2;
+  ptrPtr1 = ptrArray;
+  ptrPtr2 = ptrArray + 1;
+  return (long) ptrPtr2 - (long) ptrPtr1;
 }
 
 /*
@@ -126,7 +129,8 @@ int changeValue() {
   int * intPtr1 = intArray;
   // Write code to change value of intArray[5] to 410 using only intPtr1 and the + operator.
   // Remember not to use constants greater than 255.
-
+  intPtr1 = intPtr1 + 5;
+  *intPtr1 = 205 << 1;
   return intArray[5];
 }
 
@@ -137,7 +141,7 @@ int changeValue() {
  * Operators / and % and loops are NOT allowed.
  */
 int withinSameBlock(int * ptr1, int * ptr2) {
-  return 2;
+  return ((long) ptr1 >> 6) == ((long) ptr2 >> 6); // 6th bit indicates 64
 }
 
 /*
@@ -147,5 +151,11 @@ int withinSameBlock(int * ptr1, int * ptr2) {
  * point to the beginning of an element.
  */
 int withinArray(int * intArray, int size, int * ptr) {
-  return 2;
+  long head = (long) intArray;
+  long tail = (long) (intArray + size) - 1;
+  long p = (long) ptr;
+  // printf("head = %ld\n", head);
+  // printf("tail = %ld\n", tail);
+  // printf("ptr = %ld\n", ptr);
+  return((p - head) >> 63) == ((tail - p) >> 63);
 }
