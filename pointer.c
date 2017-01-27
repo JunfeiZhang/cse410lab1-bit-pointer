@@ -131,7 +131,7 @@ int changeValue() {
   // Remember not to use constants greater than 255.
   intPtr1 = intPtr1 + 5;
   *intPtr1 = 205 << 1;
-  return intArray[5];
+  return *(intArray+5);
 }
 
 
